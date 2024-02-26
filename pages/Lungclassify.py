@@ -33,6 +33,9 @@ def preprocess_image(image):
     image_array = np.expand_dims(image_array, axis=0)
     return preprocess_input(image_array)
 
+# Custom class labels
+custom_class_labels = ["Adenocarcinoma", "Large cell Carcinoma", "Normal", "Squamous"]
+
 # Predict button
 if uploaded_file is not None:
     st.image(uploaded_file)
@@ -43,7 +46,9 @@ if uploaded_file is not None:
             processed_image = preprocess_image(image)
             predictions = model.predict(processed_image)
             predicted_class_index = np.argmax(predictions)
-            custom_class_labels = ["Adenocarcinoma", "Large cell Carcinoma", "Normal", "Squamous"]
-            predicted_class_label = custom_class_labels[predicted_class_index]
-            st.write("Predicted Class Index:", predicted_class_index)
-            st.write("Predicted Class Label:", predicted_class_label)
+            if 0 <= predicted_class_index < len(custom_class_labels):
+                predicted_class_label = custom_class_labels[predicted_class_index]
+                st.write("Predicted Class Index:", predicted_class_index)
+                st.write("Predicted Class Label:", predicted_class_label)
+            else:
+                st.error("Error: Predicted class index is out of range.")
