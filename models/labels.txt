@@ -1,1 +1,4 @@
-
+0 Adenocarcinoma
+1 Large cell Carcinoma
+2 Normal
+3 Squamous
